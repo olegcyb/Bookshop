@@ -1,0 +1,67 @@
+﻿@using BookShop.Application;
+@model List<GetOrderDto>
+@{
+    ViewData["Title"] = "GetOrders";
+}
+
+@if (Model.Count == 0)
+{
+    <h3>There are no orders in Shop</h3>
+}
+else
+{
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#id</th>
+                <th scope="col" style="text-align:center">Status</th>
+                <th scope="col" style="text-align:center">NovaPosta</th>
+                <th scope="col" style="text-align:center">Date</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        @foreach (var order in Model)
+        {
+        <tr>
+            <td>
+                <h3>@order.Id</h3>
+            </td>
+            @if (order.Status == BookShop.Data.Status.Opened)
+            {
+                <td>
+                    <h3 style="color:green">@order.Status</h3>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <h3 style="color:red">@order.Status</h3>
+                </td>
+            }
+            <td>
+                <h3>@order.PostAddress</h3>
+            </td>
+            <td>
+                <h3 class="book_price" style="color:cadetblue">@order.date</h3>
+            </td>
+            <td>
+                <button class="btn btn-success" onclick="location.href='@Url.Action("GetOrderDetails", "Admin",new {id=order.Id})'">Details</button>
+            </td>
+            @if (order.Status == BookShop.Data.Status.Opened)
+            {
+                <td>
+                    <button class="btn btn-warning" onclick="location.href='@Url.Action("CloseOrder", "Admin",new {id=order.Id})'">Close</button>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <button class="btn btn-warning" onclick="location.href='@Url.Action("OpenOrder", "Admin",new {id=order.Id})'">Open</button>
+                </td>
+            }
+
+        </tr>
+        }
+    </table>
+}

@@ -1,0 +1,75 @@
+﻿@using BookShop.Application;
+@model GetBooksDto
+@{
+    ViewData["Title"] = "GetListOfBooks";
+}
+
+<h1>Books:</h1>
+
+@if (Model.Books.Count == 0)
+{
+    <h3>There are no books in Shop</h3>
+}
+else
+{
+    <table class="table table-hover">
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>
+                    <h3>@book.Name</h3>
+                </td>
+                <td>
+                    <h3>@book.Author</h3>
+                </td>
+                <td>
+                    <h3 class="book_price" style="color:cadetblue">@book.Price</h3>
+                </td>
+                <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("AddToBucket", "User", new { id = book.Id })'">Add To Bucket</button>
+                </td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <button class="btn btn-warning" width="100px" onclick="location.href='@Url.Action("Edit", "Admin", new { id = book.Id })'">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" width="100px" onclick="location.href='@Url.Action("Delete", "Admin", new { id = book.Id })'">Delete</button>
+                        </td>
+
+                    }
+                }
+            </tr>
+        }
+    </table>
+}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @if (Model.PageInfo.PageNumber == 1)
+        {
+            <li class="page-item"><a class="page-link" href=@string.Format("/Book/GetListOfBooks/?page={0}",Model.PageInfo.PageNumber)>Previous</a></li>
+            
+        }
+        else
+        {
+
+            <li class="page-item"><a class="page-link" href=@string.Format("/Book/GetListOfBooks/?page={0}",Model.PageInfo.PageNumber-1)>Previous</a></li>
+        }
+
+        @if (Model.PageInfo.PageNumber == Model.PageInfo.TotalPages)
+        {
+            <li class="page-item"><a class="page-link" href=@string.Format("/Book/GetListOfBooks/?page={0}",Model.PageInfo.PageNumber)>Next</a></li>
+        
+        }
+        else
+        {
+
+        <li class="page-item"><a class="page-link" href=@string.Format("/Book/GetListOfBooks/?page={0}",Model.PageInfo.PageNumber+1)>Next</a></li>
+
+        }
+
+
+    </ul>
+    </nav>

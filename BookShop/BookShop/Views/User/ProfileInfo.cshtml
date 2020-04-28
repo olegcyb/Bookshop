@@ -1,0 +1,36 @@
+﻿@using BookShop.Application;
+@model ProfileDto;
+@{UserStatistic stat = (UserStatistic)ViewData["statistic"];}
+@{
+    ViewData["Title"] = "ProfileInfo";
+}
+
+<h1>Profile:</h1>
+<div class="oneline">
+    <form method="post" action="/User/UpdateProfile">
+        <div class="form-group">
+            <input type="text" class="form-control elem" name="Email" value="@Model.Email" readonly>
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control elem" name="Age" value="@Model.Age" placeholder="Your Age">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control elem" name="City" value="@Model.City" placeholder="Your City">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control elem" name="Street" value="@Model.Street" placeholder="Your Street">
+        </div>
+        <button type="submit" class="btn btn-success elem">Update</button>
+    </form>
+</div>
+<div class="oneline">
+    <div class="well stat">
+        Orders made is @stat.CountOrders
+    </div>
+    <div class="well stat">
+        Books bought is @stat.CountBooks
+    </div>
+    <div class="well stat">
+        Total sum spend is @stat.TotalSum
+    </div>
+</div>

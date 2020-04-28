@@ -1,0 +1,27 @@
+﻿@using BookShop.Application;
+@model GetOrderDetailsDto
+@{
+    ViewData["Title"] = "GetOrderDetail";
+}
+
+<h1>OrderDetails:</h1>
+<br />
+<h2>Order created by @Model.Email</h2>
+<h2>Total price of order is @Model.TotalSum</h2>
+<hr />
+<table class="table table-hover">
+@foreach (var book in Model.Books)
+{
+    <tr>
+        <td>
+            <h3>@book.Id</h3>
+        </td>
+        <td>
+            <h3>@book.Name</h3>
+        </td>
+        <td>
+            <h3>@book.Price</h3>
+        </td>
+    </tr>
+}
+</table>

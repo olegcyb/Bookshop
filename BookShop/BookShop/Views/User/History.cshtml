@@ -1,0 +1,32 @@
+﻿@using BookShop.Application;
+@model List<GetOrderDto>
+@{
+    ViewData["Title"] = "History";
+}
+
+<h1>Your History:</h1>
+<table class="table table-hover">
+    @foreach (var order in Model)
+    {
+    <tr>
+        @if (order.Status == BookShop.Data.Status.Opened)
+        {
+            <td>
+                <h3 style="color:green">@order.Status</h3>
+            </td>
+        }
+        else
+        {
+            <td>
+                <h3 style="color:red">@order.Status</h3>
+            </td>
+        }
+        <td>
+            <h3>@order.date</h3>
+        </td>
+        <td>
+            <h3>@order.PostAddress</h3>
+        </td>
+    </tr>
+    }
+  </table>
